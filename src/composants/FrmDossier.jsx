@@ -7,8 +7,10 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import {TwitterPicker} from 'react-color';
 import { useState } from 'react';
+import Dossier from './Dossier';
+import ListeDossiers from './ListeDossiers';
 
-export default function FrmDossier({ouvert, setOuvert}) {
+export default function FrmDossier({ouvert, setOuvert, actionDossier}) {
  const [titre, setTitre] = useState('');
  const [couverture, setCouverture] = useState('');
  const [couleur, setCouleur] = useState('');
@@ -16,6 +18,14 @@ export default function FrmDossier({ouvert, setOuvert}) {
  function gererFermer(){
     setOuvert(false);
  };
+
+ function gererActionDossier(){
+
+  let date = new Date();
+  let id = 'ds_' + date.getTime() + Math.random();
+  actionDossier(id, titre, couverture, couleur, date.toJSON());
+
+ }
     
     // fonction declare de maniere expressive
     //   const gererFermer = () => {
@@ -50,7 +60,7 @@ export default function FrmDossier({ouvert, setOuvert}) {
           <TwitterPicker className='ColorPicker'
             color={'#ffffff'}
             colors={['#0f0', '#00f', '#036', '#960']}
-            onChangeComplete= {e => setCouleur(e.target.color)}
+            onChangeComplete= {color => setCouleur(color.hex)}
             width= 'auto'
             triangle='hide'
           />
@@ -58,7 +68,7 @@ export default function FrmDossier({ouvert, setOuvert}) {
         </DialogContent>
         <DialogActions>
           <Button onClick={gererFermer}>Fermer</Button>
-          <Button onClick>Soummettre</Button>
+          <Button onClick={gererActionDossier}>Soummettre</Button>
         </DialogActions>
       </Dialog>
     </div>
