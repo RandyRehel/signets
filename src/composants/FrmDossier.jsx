@@ -9,21 +9,25 @@ import {TwitterPicker} from 'react-color';
 import { useState } from 'react';
 import Dossier from './Dossier';
 import ListeDossiers from './ListeDossiers';
+import { color } from '@mui/system';
 
-export default function FrmDossier({ouvert, setOuvert, actionDossier}) {
- const [titre, setTitre] = useState('');
- const [couverture, setCouverture] = useState('');
- const [couleur, setCouleur] = useState('');
+export default function FrmDossier({ouvert, setOuvert, actionDossier, id_p = null, titre_p = '', couverture_p = '', couleur_p = '#000'}) {
+ const [titre, setTitre] = useState(titre_p);
+ const [couverture, setCouverture] = useState(couverture_p);
+ const [couleur, setCouleur] = useState(couleur_p);
  
  function gererFermer(){
     setOuvert(false);
+    setTitre(titre_p);
+    setCouverture(couverture_p);
+    setCouleur(couleur_p);
  };
 
  function gererActionDossier(){
 
-  let date = new Date();
-  let id = 'ds_' + date.getTime() + Math.random();
-  actionDossier(id, titre, couverture, couleur, date.toJSON());
+  let timestamp = new Date().getTime();
+  let id = (!id_p) ? 'ds_' + timestamp + Math.random() : id_p;
+  actionDossier(id, titre, couverture, couleur, timestamp);
 
  }
     
@@ -46,6 +50,7 @@ export default function FrmDossier({ouvert, setOuvert, actionDossier}) {
             fullWidth
             variant="standard"
             onChange={e => setTitre(e.target.value)}
+            value={titre}
           />
           <TextField
             margin="dense"
@@ -55,10 +60,11 @@ export default function FrmDossier({ouvert, setOuvert, actionDossier}) {
             fullWidth
             variant="standard"
             onChange={e => setCouverture(e.target.value)}
+            value={couverture}
           />
 
           <TwitterPicker className='ColorPicker'
-            color={'#ffffff'}
+            color= {couleur}
             colors={['#0f0', '#00f', '#036', '#960']}
             onChangeComplete= {color => setCouleur(color.hex)}
             width= 'auto'

@@ -9,8 +9,8 @@ import {useEffect, useState } from 'react';
 export default function Appli() {
   const[frmDossierOuvert, setFrmDossierOuvert] = useState(false);
 
-  function ajouterDossier(id,titre,couverture,couleur, dateModif){
-    console.log('dossier recu = '  + id + ', ' + titre + ', ' + couverture + ', ' + couleur  + ', ' + dateModif);
+  function ajouterDossier(id,titre,couverture,couleur, timestamp){
+    console.log('dossier recu = '  + id + ', ' + titre + ', ' + couverture + ', ' + couleur  + ', ' + timestamp);
     
     setDossiers([...dossiers,
       {
@@ -18,7 +18,7 @@ export default function Appli() {
         titre: titre,
         couverture: couverture,
         couleur: couleur,
-        dateModif: dateModif
+        dateModif: timestamp
       }
     ])
   }
